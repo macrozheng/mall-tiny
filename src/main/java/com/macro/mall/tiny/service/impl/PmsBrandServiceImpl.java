@@ -1,5 +1,7 @@
 package com.macro.mall.tiny.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.github.pagehelper.PageHelper;
 import com.macro.mall.tiny.mbg.mapper.PmsBrandMapper;
 import com.macro.mall.tiny.mbg.model.PmsBrand;
@@ -20,34 +22,33 @@ public class PmsBrandServiceImpl implements PmsBrandService {
     private PmsBrandMapper brandMapper;
 
     @Override
-    public List<PmsBrand> listAllBrand() {
-        return brandMapper.selectByExample(new PmsBrandExample());
-    }
-
-    @Override
-    public int createBrand(PmsBrand brand) {
+    public int create(PmsBrand brand) {
         return brandMapper.insertSelective(brand);
     }
 
     @Override
-    public int updateBrand(Long id, PmsBrand brand) {
+    public int update(Long id, PmsBrand brand) {
         brand.setId(id);
         return brandMapper.updateByPrimaryKeySelective(brand);
     }
 
     @Override
-    public int deleteBrand(Long id) {
+    public int delete(Long id) {
         return brandMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public List<PmsBrand> listBrand(int pageNum, int pageSize) {
+    public List<PmsBrand> list(int pageNum, int pageSize, String name) {
         PageHelper.startPage(pageNum, pageSize);
-        return brandMapper.selectByExample(new PmsBrandExample());
+        PmsBrandExample example = new PmsBrandExample();
+        if(StrUtil.isNotEmpty(name)){
+            example.createCriteria().andNameLike("%"+name+"%");
+        }
+        return brandMapper.selectByExample(example);
     }
 
     @Override
-    public PmsBrand getBrand(Long id) {
+    public PmsBrand detail(Long id) {
         return brandMapper.selectByPrimaryKey(id);
     }
 }

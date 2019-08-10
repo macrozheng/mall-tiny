@@ -10,15 +10,14 @@ import java.util.List;
  * Created by macro on 2019/4/19.
  */
 public interface PmsBrandService {
-    List<PmsBrand> listAllBrand();
 
-    int createBrand(PmsBrand brand);
+    int create(PmsBrand brand);
 
-    int updateBrand(Long id, PmsBrand brand);
+    int update(Long id, PmsBrand brand);
 
-    int deleteBrand(Long id);
+    int delete(Long id);
 
-    List<PmsBrand> listBrand(int pageNum, int pageSize);
+    List<PmsBrand> list(int pageNum, int pageSize, String name);
 
-    PmsBrand getBrand(Long id);
+    PmsBrand detail(Long id);
 }
