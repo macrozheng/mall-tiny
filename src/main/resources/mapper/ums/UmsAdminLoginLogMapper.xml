@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.ums.mapper.UmsAdminLoginLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.macro.mall.tiny.modules.ums.model.UmsAdminLoginLog">
+        <id column="id" property="id" />
+        <result column="admin_id" property="adminId" />
+        <result column="create_time" property="createTime" />
+        <result column="ip" property="ip" />
+        <result column="address" property="address" />
+        <result column="user_agent" property="userAgent" />
+    </resultMap>
+
+</mapper>

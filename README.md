@@ -8,365 +8,348 @@
 
 ## 简介
 
-mall-tiny是从mall项目中抽取出来的项目骨架，保留了mall项目的整个技术栈，对业务逻辑进行了精简，只保留了权限及商品核心表，方便开发使用，可以自由定制业务逻辑。
+mall-tiny是一款基于SpringBoot+MyBatis-Plus的快速开发脚手架，拥有完整的权限管理功能，可对接Vue前端，开箱即用。
+
+## 项目演示
+
+mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理系统。前端项目地址：https://github.com/macrozheng/mall-admin-web
+
+![](images/mall_tiny_start_09.png)
 
 ## 技术选型
 
-技术 | 版本 | 说明
-----|----|----
-SpringBoot | 2.1.3 | 容器+MVC框架
-SpringSecurity | 5.1.4 | 认证和授权框架
-MyBatis | 3.4.6 | ORM框架  
-MyBatisGenerator | 1.3.3 | 数据层代码生成
-PageHelper | 5.1.8 | MyBatis物理分页插件
-Swagger-UI | 2.7.0 | 文档生产工具
-Elasticsearch | 6.2.2 | 搜索引擎
-RabbitMq |3.7.14 | 消息队列
-Redis | 3.2 | 分布式缓存
-MongoDb | 3.2 | NoSql数据库
-Docker | 18.09.0 | 应用容器引擎
-Druid | 1.1.10 | 数据库连接池
-OSS | 2.5.0 | 对象存储
-JWT | 0.9.0 | JWT登录支持
-Lombok | 1.18.6 | 简化对象封装工具
+| 技术                   | 版本    | 说明             |
+| ---------------------- | ------- | ---------------- |
+| SpringBoot             | 2.3.0   | 容器+MVC框架     |
+| SpringSecurity         | 5.3.2   | 认证和授权框架   |
+| MyBatis                | 3.5.4   | ORM框架          |
+| MyBatis-Plus           | 3.3.2   | MyBatis增强工具  |
+| MyBatis-Plus Generator | 3.3.2   | 数据层代码生成器 |
+| Swagger-UI             | 2.9.2   | 文档生产工具     |
+| Redis                  | 5.0     | 分布式缓存       |
+| Docker                 | 18.09.0 | 应用容器引擎     |
+| Druid                  | 1.1.10  | 数据库连接池     |
+| JWT                    | 0.9.0   | JWT登录支持      |
+| Lombok                 | 1.18.12 | 简化对象封装工具 |
 
 ## 数据库表结构
-![展示图片](/images/tiny_screen_01.png)
 
-- 只保留了商品及权限相关核心表，仅12张表，业务逻辑简单；
-- 数据库源文件地址：[https://github.com/macrozheng/mall-tiny/blob/master/sql/mall_tiny.sql](https://github.com/macrozheng/mall-tiny/blob/master/sql/mall_tiny.sql)
+![](images/mall_tiny_start_01.png)
+
+- 化繁为简，仅保留了权限管理功能相关的9张表，方便自由定制；
+
+- 数据库源文件地址：https://github.com/macrozheng/mall-tiny/blob/master/sql/mall_tiny.sql
 
 ## 使用流程
 
 ### 环境搭建
 
-本项目启动需要依赖MySql、Elasticsearch、Redis、MongoDb、RabbitMq等服务，安装依赖服务请参考[mall在Windows环境下的部署](https://mp.weixin.qq.com/s/Q9ybpfq8IEdbZmvlaMXJdg)，数据库中需要导入mall_tiny.sql脚本。
+简化依赖服务，只需安装最常用的MySql和Redis服务即可，服务安装具体参考[mall在Windows环境下的部署](https://mp.weixin.qq.com/s/Q9ybpfq8IEdbZmvlaMXJdg)，数据库中需要导入`mall_tiny.sql`脚本。
 
 ### 开发规约
 
 #### 项目包结构
+
 ``` lua
 src
-├── common -- 用于存储通用代码及工具类
+├── common -- 用于存放通用代码
 |   ├── api -- 通用结果集封装类
-|   └── utils -- 工具类
-├── component -- 项目中定义的各类组件
+|   ├── config -- 通用配置类
+|   ├── domain -- 通用封装对象
+|   ├── exception -- 全局异常处理相关类
+|   └── service -- 通用业务类
 ├── config -- SpringBoot中的Java配置
-├── controller -- 控制器层代码
-├── dao -- 数据访问层代码，存放我们自定义查询的dao接口，以xxxDao命名
-├── dto -- 数据传输对象封装
-├── mbg -- MyBatisGenerator生成器相关代码
-|   ├── mapper -- MyBatisGenerator自动生成的mapper接口（请勿改动）
-|   └── model -- MyBatisGenerator自动生成的实体类及Example对象（请勿改动）
-├── nosql -- nosql数据库操作相关类
-|   ├── elasticsearch -- elasticsearch数据操作相关类
-|   |   ├── document -- elasticsearch中存储文档对象封装
-|   |   └── repository -- elasticsearch数据操作类
-|   └── mongodb -- mongodb数据操作相关类
-|       ├── document -- mongodb中存储文档对象封装
-|       └── repository -- mongodb数据操作类
-└── service -- 业务层接口代码
-    └── impl -- 业务层接口实现类代码
+├── domain -- 共用封装对象
+├── generator -- MyBatis-Plus代码生成器
+├── modules -- 存放业务代码的基础包
+|   └── ums -- 权限管理模块业务代码
+|       ├── controller -- 该模块相关接口
+|       ├── dto -- 该模块数据传输封装对象
+|       ├── mapper -- 该模块相关Mapper接口
+|       ├── model -- 该模块相关实体类
+|       └── service -- 该模块相关业务处理类
+└── security -- SpringSecurity认证授权相关代码
+    ├── annotation -- 相关注解
+    ├── aspect -- 相关切面
+    ├── component -- 认证授权相关组件
+    ├── config -- 相关配置
+    └── util -- 相关工具类
 ```
 
 #### 资源文件说明
 
 ``` lua
-res
-├── com.macro.mall.tiny.mbg.mapper -- mbg自动生成的mapper.xml文件（请勿改动）
-├── mapper -- 自定义的mapper.xml文件，对应dao包中的查询接口，以xxxDao.xml命名
-├── application.yml -- SpringBoot的配置文件
-├── generator.properties -- 用于配置MyBatisGenerator生成代码时的数据源信息
-├── generatorConfig.xml -- MyBatisGenerator生成代码规则配置
-└── logback-spring.xml -- 整合ELK实现日志收集时使用的配置
+resources
+├── mapper -- MyBatis中mapper.xml存放位置
+├── application.yml -- SpringBoot通用配置文件
+├── application-dev.yml -- SpringBoot开发环境配置文件
+├── application-prod.yml -- SpringBoot生产环境配置文件
+└── generator.properties -- MyBatis-Plus代码生成器配置
 ```
 
 #### 接口定义规则
 
 - 创建表记录：POST /{控制器路由名称}/create
+
 - 修改表记录：POST /{控制器路由名称}/update/{id}
+
 - 删除指定表记录：POST /{控制器路由名称}/delete/{id}
+
 - 分页查询表记录：GET /{控制器路由名称}/list
+
 - 获取指定记录详情：GET /{控制器路由名称}/{id}
 
-**具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：**
+- 具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：http://localhost:8080/swagger-ui.html
 
-![展示图片](/images/tiny_screen_02.png)
+![](images/mall_tiny_start_02.png)
 
 ### 项目运行
 
-安装完相关依赖以后直接启动com.macro.mall.tiny.MallTinyApplication类的main函数即可。
+直接运行启动类`MallTinyApplication`的`main`函数即可。
 
 ### 业务代码开发流程
 
-> 这里以品牌管理功能为例来说明业务代码开发流程。
+#### 创建业务表
 
-#### 创建表
+> 创建好`pms`模块的所有表，需要注意的是一定要写好表字段的`注释`，这样实体类和接口文档中就会自动生成字段说明了。
 
-> 创建一张pms_brand表，需要注意的是一定要写好表字段的注释，这样在生成代码时，实体类中就会有注释了，而且Swagger-UI生成的文档中也会有注释，不用再重复写注释。
+![](images/mall_tiny_start_03.png)
 
-```sql
-CREATE TABLE `pms_brand` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) DEFAULT NULL,
-  `first_letter` varchar(8) DEFAULT NULL COMMENT '首字母',
-  `sort` int(11) DEFAULT NULL,
-  `factory_status` int(1) DEFAULT NULL COMMENT '是否为品牌制造商：0->不是；1->是',
-  `show_status` int(1) DEFAULT NULL,
-  `product_count` int(11) DEFAULT NULL COMMENT '产品数量',
-  `product_comment_count` int(11) DEFAULT NULL COMMENT '产品评论数量',
-  `logo` varchar(255) DEFAULT NULL COMMENT '品牌logo',
-  `big_pic` varchar(255) DEFAULT NULL COMMENT '专区大图',
-  `brand_story` text COMMENT '品牌故事',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8 COMMENT='品牌表';
-```
+#### 使用代码生成器
 
-#### 使用MyBatisGenerator生成代码
+> 运行`MyBatisPlusGenerator`类的main方法来生成代码，可直接生成controller、service、mapper、model、mapper.xml的代码，无需手动创建。
 
->运行com.macro.mall.tiny.mbg.Generator类的main方法来生成代码，生成完后会有以下几个文件。
+- 代码生成器支持两种模式，一种生成单表的代码，比如只生成`pms_brand`表代码可以先输入`pms`，后输入`pms_brand`；
 
+![](images/mall_tiny_start_04.png)
 
-##### PmsBrandMapper接口
-> 包含了单表查询的常用接口
+- 生成代码结构一览；
 
-```java
-public interface PmsBrandMapper {
-    long countByExample(PmsBrandExample example);
+![](images/mall_tiny_start_05.png)
 
-    int deleteByExample(PmsBrandExample example);
+- 另一种直接生成整个模块的代码，比如生成`pms`模块代码可以先输入`pms`，后输入`pms_*`。
 
-    int deleteByPrimaryKey(Long id);
+![](images/mall_tiny_start_06.png)
 
-    int insert(PmsBrand record);
-
-    int insertSelective(PmsBrand record);
-
-    List<PmsBrand> selectByExampleWithBLOBs(PmsBrandExample example);
-
-    List<PmsBrand> selectByExample(PmsBrandExample example);
-
-    PmsBrand selectByPrimaryKey(Long id);
-
-    int updateByExampleSelective(@Param("record") PmsBrand record, @Param("example") PmsBrandExample example);
-
-    int updateByExampleWithBLOBs(@Param("record") PmsBrand record, @Param("example") PmsBrandExample example);
-
-    int updateByExample(@Param("record") PmsBrand record, @Param("example") PmsBrandExample example);
-
-    int updateByPrimaryKeySelective(PmsBrand record);
-
-    int updateByPrimaryKeyWithBLOBs(PmsBrand record);
-
-    int updateByPrimaryKey(PmsBrand record);
-}
-```
-##### PmsBrand实体类
-> 根据数据库表生成的实体类，已添加Swagger-UI的注解。
-
-```java
-package com.macro.mall.tiny.mbg.model;
-
-import io.swagger.annotations.ApiModelProperty;
-import java.io.Serializable;
-
-public class PmsBrand implements Serializable {
-    private Long id;
-
-    private String name;
-
-    @ApiModelProperty(value = "首字母")
-    private String firstLetter;
-
-    private Integer sort;
-
-    @ApiModelProperty(value = "是否为品牌制造商：0->不是；1->是")
-    private Integer factoryStatus;
-
-    private Integer showStatus;
-
-    @ApiModelProperty(value = "产品数量")
-    private Integer productCount;
-
-    @ApiModelProperty(value = "产品评论数量")
-    private Integer productCommentCount;
-
-    @ApiModelProperty(value = "品牌logo")
-    private String logo;
-
-    @ApiModelProperty(value = "专区大图")
-    private String bigPic;
-
-    @ApiModelProperty(value = "品牌故事")
-    private String brandStory;
-
-    private static final long serialVersionUID = 1L;
-    //省略getter、setter、toString方法
-}
-```
-##### PmsBrandExample查询构造器
-用于在复杂查询时构造查询条件。
-##### PmsBrandMapper.xml文件
-对应PmsBrandMapper接口中的mapper.xml实现，PmsBrandMapper接口中方法的具体查询实现都在此处。
-
-#### 编写数据访问层代码
+#### 编写业务代码
 
 ##### 单表查询
 
-> 单表查询推荐使用查询构造器来进行查询，不用手写sql语句，比如以下的按品牌名称进行模糊查询。
+> 由于MyBatis-Plus提供的增强功能相当强大，单表查询几乎不用手写SQL，直接使用ServiceImpl和BaseMapper中提供的方法即可。
+
+比如我们的菜单管理业务实现类`UmsMenuServiceImpl`中的方法都直接使用了这些方法。
 
 ```java
-@Override
-public List<PmsBrand> list(int pageNum, int pageSize, String name) {
-    PageHelper.startPage(pageNum, pageSize);
-    PmsBrandExample example = new PmsBrandExample();
-    if(StrUtil.isNotEmpty(name)){
-        example.createCriteria().andNameLike("%"+name+"%");
+/**
+ * 后台菜单管理Service实现类
+ * Created by macro on 2020/2/2.
+ */
+@Service
+public class UmsMenuServiceImpl extends ServiceImpl<UmsMenuMapper,UmsMenu>implements UmsMenuService {
+
+    @Override
+    public boolean create(UmsMenu umsMenu) {
+        umsMenu.setCreateTime(new Date());
+        updateLevel(umsMenu);
+        return save(umsMenu);
     }
-    return brandMapper.selectByExample(example);
+
+    @Override
+    public boolean update(Long id, UmsMenu umsMenu) {
+        umsMenu.setId(id);
+        updateLevel(umsMenu);
+        return updateById(umsMenu);
+    }
+
+    @Override
+    public Page<UmsMenu> list(Long parentId, Integer pageSize, Integer pageNum) {
+        Page<UmsMenu> page = new Page<>(pageNum,pageSize);
+        QueryWrapper<UmsMenu> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UmsMenu::getParentId,parentId)
+                .orderByDesc(UmsMenu::getSort);
+        return page(page,wrapper);
+    }
+
+    @Override
+    public List<UmsMenuNode> treeList() {
+        List<UmsMenu> menuList = list();
+        List<UmsMenuNode> result = menuList.stream()
+                .filter(menu -> menu.getParentId().equals(0L))
+                .map(menu -> covertMenuNode(menu, menuList)).collect(Collectors.toList());
+        return result;
+    }
+
+    @Override
+    public boolean updateHidden(Long id, Integer hidden) {
+        UmsMenu umsMenu = new UmsMenu();
+        umsMenu.setId(id);
+        umsMenu.setHidden(hidden);
+        return updateById(umsMenu);
+    }
 }
 ```
 
 ##### 分页查询
-> 分页查询使用PageHelper分页插件实现，只需在查询语句前添加以下代码即可。
+
+> 对于分页查询MyBatis-Plus原生支持，不需要再整合其他插件，直接构造Page对象，然后调用ServiceImpl中的page方法即可。
 
 ```java
- PageHelper.startPage(pageNum, pageSize);
+/**
+ * 后台菜单管理Service实现类
+ * Created by macro on 2020/2/2.
+ */
+@Service
+public class UmsMenuServiceImpl extends ServiceImpl<UmsMenuMapper,UmsMenu>implements UmsMenuService {
+    @Override
+    public Page<UmsMenu> list(Long parentId, Integer pageSize, Integer pageNum) {
+        Page<UmsMenu> page = new Page<>(pageNum,pageSize);
+        QueryWrapper<UmsMenu> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(UmsMenu::getParentId,parentId)
+                .orderByDesc(UmsMenu::getSort);
+        return page(page,wrapper);
+    }
+}
 ```
 
 ##### 多表查询
 
-> 多表查询需要自己编写mapper接口和mapper.xml实现，和MyBatis中用法一致，这里以查询包含属性的商品为例。
+> 对于多表查询，我们需要手写mapper.xml中的SQL实现，由于之前我们已经生成了mapper.xml文件，所以我们直接在Mapper接口中定义好方法，然后在mapper.xml写好SQL实现即可。
 
-- 首先需要需要自定义一个Dao接口，为了和mbg生成的mapper接口进行区分，mall-tiny中自定义的mapper接口都以xxxDao来命名。
+- 比如说我们需要写一个根据用户ID获取其分配的菜单的方法，首先我们在`UmsMenuMapper`接口中添加好`getMenuList`方法；
+
 ```java
-public interface EsProductDao {
-    List<EsProduct> getAllEsProductList(@Param("id") Long id);
+/**
+ * <p>
+ * 后台菜单表 Mapper 接口
+ * </p>
+ *
+ * @author macro
+ * @since 2020-08-21
+ */
+public interface UmsMenuMapper extends BaseMapper<UmsMenu> {
+
+    /**
+     * 根据后台用户ID获取菜单
+     */
+    List<UmsMenu> getMenuList(@Param("adminId") Long adminId);
+
 }
-````
-- 然后编写接口的xml查询实现，在mall-tiny中以xxxDao.xml来命名。
-```xml
-<select id="getAllEsProductList" resultMap="esProductListMap">
-    select
-        p.id id,
-        p.product_sn productSn,
-        p.brand_id brandId,
-        p.brand_name brandName,
-        p.product_category_id productCategoryId,
-        p.product_category_name productCategoryName,
-        p.pic pic,
-        p.name name,
-        p.sub_title subTitle,
-        p.price price,
-        p.sale sale,
-        p.new_status newStatus,
-        p.recommand_status recommandStatus,
-        p.stock stock,
-        p.promotion_type promotionType,
-        p.keywords keywords,
-        p.sort sort,
-        pav.id attr_id,
-        pav.value attr_value,
-        pav.product_attribute_id attr_product_attribute_id,
-        pa.type attr_type,
-        pa.name attr_name
-    from pms_product p
-    left join pms_product_attribute_value pav on p.id = pav.product_id
-    left join pms_product_attribute pa on pav.product_attribute_id= pa.id
-    where delete_status = 0 and publish_status = 1
-    <if test="id!=null">
-        and p.id=#{id}
-    </if>
-</select>
 ```
 
-#### 编写业务层代码
+- 然后在`UmsMenuMapper.xml`添加该方法的对应SQL实现即可。
 
-- 先在com.macro.mall.tiny.service包中添加PmsBrandService接口；
-- 再在com.macro.mall.tiny.serviceImpl中添加其实现类。
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.tiny.modules.ums.mapper.UmsMenuMapper">
 
-#### 编写控制器层代码
-
-在com.macro.mall.tiny.controller包中添加PmsBrandController类。
+    <select id="getMenuList" resultType="com.macro.mall.tiny.modules.ums.model.UmsMenu">
+        SELECT
+            m.id id,
+            m.parent_id parentId,
+            m.create_time createTime,
+            m.title title,
+            m.level level,
+            m.sort sort,
+            m.name name,
+            m.icon icon,
+            m.hidden hidden
+        FROM
+            ums_admin_role_relation arr
+                LEFT JOIN ums_role r ON arr.role_id = r.id
+                LEFT JOIN ums_role_menu_relation rmr ON r.id = rmr.role_id
+                LEFT JOIN ums_menu m ON rmr.menu_id = m.id
+        WHERE
+            arr.admin_id = #{adminId}
+          AND m.id IS NOT NULL
+        GROUP BY
+            m.id
+    </select>
+    
+</mapper>
+```
 
 ### 项目部署
 
-mall-tiny已经集成了docker插件，可以打包成docker镜像后使用docker来部署，具体参考：[使用Maven插件为SpringBoot应用构建Docker镜像](https://mp.weixin.qq.com/s/q2KDzHbPkf3Q0EY8qYjYgw)
+mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，具体参考：[使用Maven插件为SpringBoot应用构建Docker镜像](https://mp.weixin.qq.com/s/q2KDzHbPkf3Q0EY8qYjYgw)
 
 ### 其他说明
 
 #### SpringSecurity相关
 
-> 由于使用了SpringSecurity来实现认证和授权，部分接口需要登录才可以访问，访问登录接口流程如下。
+> 由于使用了SpringSecurity来实现认证和授权，部分接口需要token才可以访问，访问需要认证授权接口流程如下。
 
-- 访问Swagger-UI接口文档：[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
-- 调用登录接口获取token：
-![展示图片](/images/tiny_screen_03.png)
-![展示图片](/images/tiny_screen_04.png)
-![展示图片](/images/tiny_screen_05.png)
-- 点击右上角Authorize按钮输入真实token:
-![展示图片](/images/tiny_screen_06.png)
+- 访问Swagger-UI接口文档：http://localhost:8080/swagger-ui.html
 
-#### 关于日志收集
-本项目已使用AOP切面记录了所有接口访问日志，同时整合了ELK实现了日志收集。ELK日志收集环境搭建可以参考：[SpringBoot应用整合ELK实现日志收集](https://mp.weixin.qq.com/s/ll_A6ddBaU99LSYmKdttYw)。
+- 调用登录接口获取token；
 
-#### oss文件上传相关
-oss文件上传使用时需要修改成你自己的配置，需要修改配置如下：
-```yml
-# OSS相关配置信息
-aliyun:
-  oss:
-    endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
-    accessKeyId: test # 访问身份验证中用到用户标识
-    accessKeySecret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: macro-oss # oss的存储空间
-    policy:
-      expire: 300 # 签名有效期(S)
-    maxSize: 10 # 上传文件大小(M)
-    callback: http://localhost:8080/aliyun/oss/callback # 文件上传成功后的回调地址（必须公网可以访问）
-    dir:
-      prefix: mall/images/ # 上传文件夹路径前缀
-```
+![](images/mall_tiny_start_07.png)
 
-#### 关于跨域问题
-已经配置了全局的过滤器，允许跨越访问，同时SpringSecurity也放行了跨域的预检OPTIONS请求。
+- 点击右上角Authorize按钮输入token，然后访问相关接口即可。
+
+![](images/mall_tiny_start_08.png)
+
+#### 请求参数校验
+
+> 默认集成了`Jakarta Bean Validation`参数校验框架，只需在参数对象属性中添加`javax.validation.constraints`包中的注解注解即可实现校验功能，这里以登录参数校验为例。
+
+- 首先在登录请求参数中添加`@NotEmpty`注解；
 
 ```java
 /**
- * 全局跨域配置
- * Created by macro on 2019/7/27.
+ * 用户登录参数
+ * Created by macro on 2018/4/26.
  */
-@Configuration
-public class GlobalCorsConfig {
-
-    /**
-     * 允许跨域调用的过滤器
-     */
-    @Bean
-    public CorsFilter corsFilter() {
-        CorsConfiguration config = new CorsConfiguration();
-        //允许所有域名进行跨域调用
-        config.addAllowedOrigin("*");
-        //允许跨越发送cookie
-        config.setAllowCredentials(true);
-        //放行全部原始头信息
-        config.addAllowedHeader("*");
-        //允许所有请求方法跨域调用
-        config.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class UmsAdminLoginParam {
+    @NotEmpty
+    @ApiModelProperty(value = "用户名",required = true)
+    private String username;
+    @NotEmpty
+    @ApiModelProperty(value = "密码",required = true)
+    private String password;
 }
 ```
+
+- 然后在登录接口中添加`@Validated`注解开启参数校验功能即可。
+
 ```java
-//SecurityConfig的configure方法中已经添加
-.antMatchers(HttpMethod.OPTIONS)//跨域请求会先进行一次options请求
-.permitAll()
+/**
+ * 后台用户管理
+ * Created by macro on 2018/4/26.
+ */
+@Controller
+@Api(tags = "UmsAdminController", description = "后台用户管理")
+@RequestMapping("/admin")
+public class UmsAdminController {
+
+    @ApiOperation(value = "登录以后返回token")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
+        String token = adminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
+        if (token == null) {
+            return CommonResult.validateFailed("用户名或密码错误");
+        }
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        tokenMap.put("tokenHead", tokenHead);
+        return CommonResult.success(tokenMap);
+    }
+}
 ```
 
 ## 公众号
 
-mall项目全套学习教程连载中，**关注公众号**第一时间获取。
+mall项目全套学习教程连载中，关注公众号「**macrozheng**」第一时间获取。
+
+加微信群交流，公众号后台回复「**加群**」即可。
 
 ![公众号图片](http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/banner/qrcode_for_macrozheng_258.jpg)
+
+## 许可证
+
+[Apache License 2.0](https://github.com/macrozheng/mall-tiny/blob/master/LICENSE)
+
+Copyright (c) 2018-2020 macrozheng
