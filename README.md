@@ -14,7 +14,7 @@ mall-tiny是一款基于SpringBoot+MyBatis-Plus的快速开发脚手架，拥有
 
 mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理系统。前端项目地址：https://github.com/macrozheng/mall-admin-web
 
-![](images/mall_tiny_start_09.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_09.png)
 
 ## 技术选型
 
@@ -34,7 +34,7 @@ mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理�
 
 ## 数据库表结构
 
-![](images/mall_tiny_start_01.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_01.png)
 
 - 化繁为简，仅保留了权限管理功能相关的9张表，方便自由定制；
 
@@ -101,7 +101,7 @@ resources
 
 - 具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：http://localhost:8080/swagger-ui.html
 
-![](images/mall_tiny_start_02.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_02.png)
 
 ### 项目运行
 
@@ -113,7 +113,7 @@ resources
 
 > 创建好`pms`模块的所有表，需要注意的是一定要写好表字段的`注释`，这样实体类和接口文档中就会自动生成字段说明了。
 
-![](images/mall_tiny_start_03.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_03.png)
 
 #### 使用代码生成器
 
@@ -121,15 +121,15 @@ resources
 
 - 代码生成器支持两种模式，一种生成单表的代码，比如只生成`pms_brand`表代码可以先输入`pms`，后输入`pms_brand`；
 
-![](images/mall_tiny_start_04.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_04.png)
 
 - 生成代码结构一览；
 
-![](images/mall_tiny_start_05.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_05.png)
 
 - 另一种直接生成整个模块的代码，比如生成`pms`模块代码可以先输入`pms`，后输入`pms_*`。
 
-![](images/mall_tiny_start_06.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_06.png)
 
 #### 编写业务代码
 
@@ -283,11 +283,11 @@ mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，�
 
 - 调用登录接口获取token；
 
-![](images/mall_tiny_start_07.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_07.png)
 
 - 点击右上角Authorize按钮输入token，然后访问相关接口即可。
 
-![](images/mall_tiny_start_08.png)
+![](http://img.macrozheng.com/mall/project/mall_tiny_start_08.png)
 
 #### 请求参数校验
 
