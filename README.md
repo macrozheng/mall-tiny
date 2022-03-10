@@ -353,4 +353,4 @@ public class UmsAdminController {
 
 [Apache License 2.0](https://github.com/macrozheng/mall-tiny/blob/master/LICENSE)
 
-Copyright (c) 2018-2021 macrozheng
+Copyright (c) 2018-2022 macrozheng
