@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.macro.mall</groupId>
     <artifactId>mall-tiny</artifactId>
@@ -23,7 +22,7 @@
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <jjwt.version>0.9.0</jjwt.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
-        <velocity.version>2.2</velocity.version>
+        <velocity.version>2.3</velocity.version>
     </properties>
 
     <parent>
