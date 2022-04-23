@@ -272,7 +272,7 @@ public interface UmsMenuMapper extends BaseMapper<UmsMenu> {
 
 ### 项目部署
 
-mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，具体参考：[使用Maven插件为SpringBoot应用构建Docker镜像](https://mp.weixin.qq.com/s/q2KDzHbPkf3Q0EY8qYjYgw)
+mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，具体参考：[使用Maven插件为SpringBoot应用构建Docker镜像](https://www.macrozheng.com/mall/reference/docker_maven.html)
 
 ### 其他说明
 
