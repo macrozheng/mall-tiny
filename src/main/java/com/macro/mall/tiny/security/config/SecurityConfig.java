@@ -1,7 +1,7 @@
 package com.macro.mall.tiny.security.config;
 
-import com.macro.mall.security.util.JwtTokenUtil;
 import com.macro.mall.tiny.security.component.*;
+import com.macro.mall.tiny.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
@@ -26,13 +26,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
+    @Autowired
+    private IgnoreUrlsConfig ignoreUrlsConfig;
+    @Autowired
+    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+    @Autowired
+    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Autowired
+    private DynamicSecurityFilter dynamicSecurityFilter;
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         //不需要保护的资源路径允许访问
-        for (String url : ignoreUrlsConfig().getUrls()) {
+        for (String url : ignoreUrlsConfig.getUrls()) {
             registry.antMatchers(url).permitAll();
         }
         //允许跨域请求的OPTIONS请求
@@ -52,21 +64,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 自定义权限拒绝处理类
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler())
-                .authenticationEntryPoint(restAuthenticationEntryPoint())
+                .accessDeniedHandler(restfulAccessDeniedHandler)
+                .authenticationEntryPoint(restAuthenticationEntryPoint)
                 // 自定义权限拦截器JWT过滤器
                 .and()
-                .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
         //有动态权限配置时添加动态权限校验过滤器
         if(dynamicSecurityService!=null){
-            registry.and().addFilterBefore(dynamicSecurityFilter(), FilterSecurityInterceptor.class);
+            registry.and().addFilterBefore(dynamicSecurityFilter, FilterSecurityInterceptor.class);
         }
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
     }
 
     @Bean
@@ -74,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+//    @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
     }
@@ -112,8 +124,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
+//    @ConditionalOnBean(name = "dynamicSecurityService")
+//    @Bean
     public DynamicSecurityFilter dynamicSecurityFilter() {
         return new DynamicSecurityFilter();
     }

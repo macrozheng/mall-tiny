@@ -1,4 +1,4 @@
-package com.macro.mall.security.util;
+package com.macro.mall.tiny.security.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

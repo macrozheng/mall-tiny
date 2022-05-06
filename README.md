@@ -280,7 +280,7 @@ mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，�
 
 > 由于使用了SpringSecurity来实现认证和授权，部分接口需要token才可以访问，访问需要认证授权接口流程如下。
 
-- 访问Swagger-UI接口文档：http://localhost:8080/swagger-ui.html
+- 访问Swagger-UI接口文档：http://localhost:8080/swagger-ui/
 
 - 调用登录接口获取token；
 

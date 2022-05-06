@@ -1,4 +1,4 @@
-package com.macro.mall.security.util;
+package com.macro.mall.tiny.security.util;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
