@@ -17,13 +17,10 @@
         <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
         <druid.version>1.1.10</druid.version>
         <hutool.version>4.5.7</hutool.version>
-        <swagger2.version>2.9.2</swagger2.version>
-        <swagger-models.version>1.6.0</swagger-models.version>
-        <swagger-annotations.version>1.6.0</swagger-annotations.version>
         <mysql-connector.version>8.0.16</mysql-connector.version>
         <jjwt.version>0.9.0</jjwt.version>
-        <mybatis-plus.version>3.3.2</mybatis-plus.version>
-        <velocity.version>2.2</velocity.version>
+        <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <velocity.version>2.3</velocity.version>
     </properties>
 
     <parent>
