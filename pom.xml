@@ -15,11 +15,12 @@
         <skipTests>true</skipTests>
         <docker.host>http://192.168.3.101:2375</docker.host>
         <docker.maven.plugin.version>1.2.2</docker.maven.plugin.version>
-        <druid.version>1.1.10</druid.version>
-        <hutool.version>4.5.7</hutool.version>
-        <mysql-connector.version>8.0.16</mysql-connector.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <druid.version>1.2.9</druid.version>
+        <hutool.version>5.8.0</hutool.version>
+        <mysql-connector.version>8.0.29</mysql-connector.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
+        <springfox-swagger.version>3.0.0</springfox-swagger.version>
         <velocity.version>2.3</velocity.version>
     </properties>
 
@@ -27,7 +28,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.6.7</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/>
     </parent>
     <dependencies>
         <!--SpringBoot通用依赖模块-->
@@ -69,7 +70,7 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <version>${springfox-swagger.version}</version>
         </dependency>
         <!--redis依赖配置-->
         <dependency>
