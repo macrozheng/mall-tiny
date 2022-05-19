@@ -2,6 +2,7 @@ package com.macro.mall.tiny.security.component;
 
 import com.macro.mall.tiny.security.config.IgnoreUrlsConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.access.SecurityMetadataSource;
 import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
@@ -20,6 +21,7 @@ import java.io.IOException;
  * Created by macro on 2020/2/7.
  */
 @Component
+@ConditionalOnBean(name = "dynamicSecurityService")
 public class DynamicSecurityFilter extends AbstractSecurityInterceptor implements Filter {
 
     @Autowired

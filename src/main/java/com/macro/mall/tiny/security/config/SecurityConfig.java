@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -22,7 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
  * Created by macro on 2019/11/5.
  */
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     @Autowired(required = false)
     private DynamicSecurityService dynamicSecurityService;
@@ -33,14 +34,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Autowired
     private DynamicSecurityFilter dynamicSecurityFilter;
 
-    @Override
-    protected void configure(HttpSecurity httpSecurity) throws Exception {
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry = httpSecurity
                 .authorizeRequests();
         //不需要保护的资源路径允许访问
@@ -73,28 +72,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         if(dynamicSecurityService!=null){
             registry.and().addFilterBefore(dynamicSecurityFilter, FilterSecurityInterceptor.class);
         }
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService())
-                .passwordEncoder(passwordEncoder);
+        return httpSecurity.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-//    @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter();
-    }
-
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
     }
 
     @Bean
@@ -121,13 +104,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
         return new DynamicAccessDecisionManager();
-    }
-
-
-//    @ConditionalOnBean(name = "dynamicSecurityService")
-//    @Bean
-    public DynamicSecurityFilter dynamicSecurityFilter() {
-        return new DynamicSecurityFilter();
     }
 
     @ConditionalOnBean(name = "dynamicSecurityService")
