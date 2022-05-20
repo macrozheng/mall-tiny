@@ -6,8 +6,8 @@ spring:
     name: mall-tiny
   profiles:
     active: dev
-  main:
-    allow-circular-references: true
+#  main:
+#    allow-circular-references: true
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

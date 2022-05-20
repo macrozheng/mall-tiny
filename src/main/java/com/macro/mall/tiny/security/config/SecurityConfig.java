@@ -5,6 +5,7 @@ import com.macro.mall.tiny.security.util.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -20,13 +21,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 /**
- * 对SpringSecurity的配置的扩展，支持自定义白名单资源路径和查询用户逻辑
+ * SpringSecurity 5.4.x以上新用法配置
+ * 为避免循环依赖，仅用于配置HttpSecurity
  * Created by macro on 2019/11/5.
  */
+@Configuration
 public class SecurityConfig {
 
-    @Autowired(required = false)
-    private DynamicSecurityService dynamicSecurityService;
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
     @Autowired
@@ -35,6 +36,8 @@ public class SecurityConfig {
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Autowired
+    private DynamicSecurityService dynamicSecurityService;
     @Autowired
     private DynamicSecurityFilter dynamicSecurityFilter;
 
@@ -74,42 +77,4 @@ public class SecurityConfig {
         }
         return httpSecurity.build();
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public RestfulAccessDeniedHandler restfulAccessDeniedHandler() {
-        return new RestfulAccessDeniedHandler();
-    }
-
-    @Bean
-    public RestAuthenticationEntryPoint restAuthenticationEntryPoint() {
-        return new RestAuthenticationEntryPoint();
-    }
-
-    @Bean
-    public IgnoreUrlsConfig ignoreUrlsConfig() {
-        return new IgnoreUrlsConfig();
-    }
-
-    @Bean
-    public JwtTokenUtil jwtTokenUtil() {
-        return new JwtTokenUtil();
-    }
-
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
-    public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
-        return new DynamicAccessDecisionManager();
-    }
-
-    @ConditionalOnBean(name = "dynamicSecurityService")
-    @Bean
-    public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
-        return new DynamicSecurityMetadataSource();
-    }
-
 }

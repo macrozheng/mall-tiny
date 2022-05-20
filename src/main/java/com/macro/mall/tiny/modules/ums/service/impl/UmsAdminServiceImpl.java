@@ -19,6 +19,7 @@ import com.macro.mall.tiny.modules.ums.service.UmsAdminCacheService;
 import com.macro.mall.tiny.modules.ums.service.UmsAdminRoleRelationService;
 import com.macro.mall.tiny.modules.ums.service.UmsAdminService;
 import com.macro.mall.tiny.security.util.JwtTokenUtil;
+import com.macro.mall.tiny.security.util.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -53,8 +54,6 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
     @Autowired
     private UmsAdminLoginLogMapper loginLogMapper;
     @Autowired
-    private UmsAdminCacheService adminCacheService;
-    @Autowired
     private UmsAdminRoleRelationService adminRoleRelationService;
     @Autowired
     private UmsRoleMapper roleMapper;
@@ -63,14 +62,14 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
 
     @Override
     public UmsAdmin getAdminByUsername(String username) {
-        UmsAdmin admin = adminCacheService.getAdmin(username);
+        UmsAdmin admin = getCacheService().getAdmin(username);
         if(admin!=null) return  admin;
         QueryWrapper<UmsAdmin> wrapper = new QueryWrapper<>();
         wrapper.lambda().eq(UmsAdmin::getUsername,username);
         List<UmsAdmin> adminList = list(wrapper);
         if (adminList != null && adminList.size() > 0) {
             admin = adminList.get(0);
-            adminCacheService.setAdmin(admin);
+            getCacheService().setAdmin(admin);
             return admin;
         }
         return null;
@@ -179,15 +178,15 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
             }
         }
         boolean success = updateById(admin);
-        adminCacheService.delAdmin(id);
+        getCacheService().delAdmin(id);
         return success;
     }
 
     @Override
     public boolean delete(Long id) {
-        adminCacheService.delAdmin(id);
+        getCacheService().delAdmin(id);
         boolean success = removeById(id);
-        adminCacheService.delResourceList(id);
+        getCacheService().delResourceList(id);
         return success;
     }
 
@@ -209,7 +208,7 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
             }
             adminRoleRelationService.saveBatch(list);
         }
-        adminCacheService.delResourceList(adminId);
+        getCacheService().delResourceList(adminId);
         return count;
     }
 
@@ -220,13 +219,13 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
 
     @Override
     public List<UmsResource> getResourceList(Long adminId) {
-        List<UmsResource> resourceList = adminCacheService.getResourceList(adminId);
+        List<UmsResource> resourceList = getCacheService().getResourceList(adminId);
         if(CollUtil.isNotEmpty(resourceList)){
             return  resourceList;
         }
         resourceList = resourceMapper.getResourceList(adminId);
         if(CollUtil.isNotEmpty(resourceList)){
-            adminCacheService.setResourceList(adminId,resourceList);
+            getCacheService().setResourceList(adminId,resourceList);
         }
         return resourceList;
     }
@@ -250,7 +249,7 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
         }
         umsAdmin.setPassword(passwordEncoder.encode(param.getNewPassword()));
         updateById(umsAdmin);
-        adminCacheService.delAdmin(umsAdmin.getId());
+        getCacheService().delAdmin(umsAdmin.getId());
         return 1;
     }
 
@@ -263,5 +262,10 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminMapper,UmsAdmin> im
             return new AdminUserDetails(admin,resourceList);
         }
         throw new UsernameNotFoundException("用户名或密码错误");
+    }
+
+    @Override
+    public UmsAdminCacheService getCacheService() {
+        return SpringUtil.getBean(UmsAdminCacheService.class);
     }
 }
