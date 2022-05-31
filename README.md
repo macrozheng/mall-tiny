@@ -273,7 +273,19 @@ public interface UmsMenuMapper extends BaseMapper<UmsMenu> {
 
 ### 项目部署
 
-mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，具体参考：[使用Maven插件为SpringBoot应用构建Docker镜像](https://www.macrozheng.com/mall/reference/docker_maven.html)
+mall-tiny已经集成了Docker插件，可以打包成Docker镜像来部署，具体参考：[使用Maven插件为SpringBoot应用构建Docker镜像](https://www.macrozheng.com/project/maven_docker_fabric8.html)
+
+安装好MySQL和Redis服务后，直接使用如下命令运行即可。
+
+```bash
+docker run -p 8080:8080 --name mall-tiny \
+--link mysql:db \
+--link redis:redis \
+-e 'spring.profiles.active'=prod \
+-v /etc/localtime:/etc/localtime \
+-v /mydata/app/mall-tiny-fabric/logs:/var/logs \
+-d mall-tiny/mall-tiny:1.0.0-SNAPSHOT
+```
 
 ### 其他说明
 
