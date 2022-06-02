@@ -283,7 +283,7 @@ docker run -p 8080:8080 --name mall-tiny \
 --link redis:redis \
 -e 'spring.profiles.active'=prod \
 -v /etc/localtime:/etc/localtime \
--v /mydata/app/mall-tiny-fabric/logs:/var/logs \
+-v /mydata/app/mall-tiny/logs:/var/logs \
 -d mall-tiny/mall-tiny:1.0.0-SNAPSHOT
 ```
 
