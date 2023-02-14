@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,7 +19,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @TableName("ums_admin_role_relation")
-@ApiModel(value="UmsAdminRoleRelation对象", description="后台用户和角色关系表")
+@Schema(title="UmsAdminRoleRelation对象", description="后台用户和角色关系表")
 public class UmsAdminRoleRelation implements Serializable {
 
     private static final long serialVersionUID=1L;

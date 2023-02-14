@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.generator.config.querys.MySqlQuery;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
+import com.baomidou.mybatisplus.generator.query.SQLQuery;
 
 import java.util.Collections;
 import java.util.Scanner;
@@ -57,8 +58,7 @@ public class MyBatisPlusGenerator {
                 .outputDir(projectPath + "/src/main/java")
                 .author("macro")
                 .disableOpenDir()
-                .enableSwagger()
-                .fileOverride()
+                .enableSpringdoc()
                 .dateType(DateType.ONLY_DATE)
                 .build();
     }
@@ -73,6 +73,7 @@ public class MyBatisPlusGenerator {
         String password = props.getStr("dataSource.password");
         return new DataSourceConfig.Builder(url,username,password)
                 .dbQuery(new MySqlQuery())
+                .databaseQueryClass(SQLQuery.class)
                 .build();
     }
 
@@ -85,7 +86,7 @@ public class MyBatisPlusGenerator {
                 .moduleName(moduleName)
                 .parent(props.getStr("package.base"))
                 .entity("model")
-                .pathInfo(Collections.singletonMap(OutputFile.mapperXml, projectPath + "/src/main/resources/mapper/" + moduleName))
+                .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + "/src/main/resources/mapper/" + moduleName))
                 .build();
     }
 
@@ -103,11 +104,13 @@ public class MyBatisPlusGenerator {
     private static StrategyConfig initStrategyConfig(String[] tableNames) {
         StrategyConfig.Builder builder = new StrategyConfig.Builder();
                 builder.entityBuilder()
+                .enableFileOverride()
                 .naming(NamingStrategy.underline_to_camel)
                 .columnNaming(NamingStrategy.underline_to_camel)
                 .enableLombok()
                 .formatFileName("%s")
                 .mapperBuilder()
+                .enableFileOverride()
                 .enableBaseResultMap()
                 .formatMapperFileName("%sMapper")
                 .formatXmlFileName("%sMapper")

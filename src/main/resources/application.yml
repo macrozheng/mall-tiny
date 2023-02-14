@@ -38,14 +38,16 @@ redis:
 secure:
   ignored:
     urls: #安全路径白名单
+      - /
+      - /swagger-ui.html
       - /swagger-ui/
-      - /swagger-resources/**
-      - /**/v2/api-docs
-      - /**/*.html
-      - /**/*.js
-      - /**/*.css
-      - /**/*.png
+      - /*.html
       - /favicon.ico
+      - /**/*.html
+      - /**/*.css
+      - /**/*.js
+      - /swagger-resources/**
+      - /v3/api-docs/**
       - /actuator/**
       - /druid/**
       - /admin/login

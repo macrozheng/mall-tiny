@@ -19,15 +19,16 @@
         <hutool.version>5.8.9</hutool.version>
         <mysql-connector.version>8.0.29</mysql-connector.version>
         <jjwt.version>0.9.1</jjwt.version>
-        <mybatis-plus.version>3.5.1</mybatis-plus.version>
-        <springfox-swagger.version>3.0.0</springfox-swagger.version>
+        <mybatis-plus.version>3.5.3</mybatis-plus.version>
+        <springdoc-openapi.version>2.0.2</springdoc-openapi.version>
         <velocity.version>2.3</velocity.version>
+        <jaxb-api.version>2.3.1</jaxb-api.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.5</version>
+        <version>3.0.2</version>
         <relativePath/>
     </parent>
     <dependencies>
@@ -66,11 +67,11 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>${mysql-connector.version}</version>
         </dependency>
-        <!--Swagger-UI API文档生产工具-->
+        <!--SpringDoc依赖配置-->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>${springfox-swagger.version}</version>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi.version}</version>
         </dependency>
         <!--redis依赖配置-->
         <dependency>
@@ -123,6 +124,12 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
             <version>${velocity.version}</version>
+        </dependency>
+        <!--解决JDK 11 兼容性问题-->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>${jaxb-api.version}</version>
         </dependency>
     </dependencies>
 

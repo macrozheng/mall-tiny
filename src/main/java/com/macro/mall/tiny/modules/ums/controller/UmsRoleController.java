@@ -7,8 +7,7 @@ import com.macro.mall.tiny.modules.ums.model.UmsMenu;
 import com.macro.mall.tiny.modules.ums.model.UmsResource;
 import com.macro.mall.tiny.modules.ums.model.UmsRole;
 import com.macro.mall.tiny.modules.ums.service.UmsRoleService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,14 +20,13 @@ import java.util.List;
  * Created by macro on 2018/9/30.
  */
 @Controller
-@Api(tags = "UmsRoleController")
 @Tag(name = "UmsRoleController",description = "后台用户角色管理")
 @RequestMapping("/role")
 public class UmsRoleController {
     @Autowired
     private UmsRoleService roleService;
 
-    @ApiOperation("添加角色")
+    @Operation(summary = "添加角色")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult create(@RequestBody UmsRole role) {
@@ -39,7 +37,7 @@ public class UmsRoleController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("修改角色")
+    @Operation(summary = "修改角色")
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult update(@PathVariable Long id, @RequestBody UmsRole role) {
@@ -51,7 +49,7 @@ public class UmsRoleController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("批量删除角色")
+    @Operation(summary = "批量删除角色")
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult delete(@RequestParam("ids") List<Long> ids) {
@@ -63,7 +61,7 @@ public class UmsRoleController {
     }
 
 
-    @ApiOperation("获取所有角色")
+    @Operation(summary = "获取所有角色")
     @RequestMapping(value = "/listAll", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<UmsRole>> listAll() {
@@ -71,7 +69,7 @@ public class UmsRoleController {
         return CommonResult.success(roleList);
     }
 
-    @ApiOperation("根据角色名称分页获取角色列表")
+    @Operation(summary = "根据角色名称分页获取角色列表")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<UmsRole>> list(@RequestParam(value = "keyword", required = false) String keyword,
@@ -81,7 +79,7 @@ public class UmsRoleController {
         return CommonResult.success(CommonPage.restPage(roleList));
     }
 
-    @ApiOperation("修改角色状态")
+    @Operation(summary = "修改角色状态")
     @RequestMapping(value = "/updateStatus/{id}", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateStatus(@PathVariable Long id, @RequestParam(value = "status") Integer status) {
@@ -95,7 +93,7 @@ public class UmsRoleController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("获取角色相关菜单")
+    @Operation(summary = "获取角色相关菜单")
     @RequestMapping(value = "/listMenu/{roleId}", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<UmsMenu>> listMenu(@PathVariable Long roleId) {
@@ -103,7 +101,7 @@ public class UmsRoleController {
         return CommonResult.success(roleList);
     }
 
-    @ApiOperation("获取角色相关资源")
+    @Operation(summary = "获取角色相关资源")
     @RequestMapping(value = "/listResource/{roleId}", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<UmsResource>> listResource(@PathVariable Long roleId) {
@@ -111,7 +109,7 @@ public class UmsRoleController {
         return CommonResult.success(roleList);
     }
 
-    @ApiOperation("给角色分配菜单")
+    @Operation(summary = "给角色分配菜单")
     @RequestMapping(value = "/allocMenu", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult allocMenu(@RequestParam Long roleId, @RequestParam List<Long> menuIds) {
@@ -119,7 +117,7 @@ public class UmsRoleController {
         return CommonResult.success(count);
     }
 
-    @ApiOperation("给角色分配资源")
+    @Operation(summary = "给角色分配资源")
     @RequestMapping(value = "/allocResource", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult allocResource(@RequestParam Long roleId, @RequestParam List<Long> resourceIds) {
