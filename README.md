@@ -299,7 +299,7 @@ docker run -p 8080:8080 --name mall-tiny \
 
 ![](http://img.macrozheng.com/mall/project/mall_tiny_start_07.png)
 
-- 点击右上角Authorize按钮输入token，然后访问相关接口即可（注意新版不需要添加Beaer的认证前缀了）。
+- 点击右上角Authorize按钮输入token，然后访问相关接口即可（注意新版不需要添加Bearer的认证前缀了）。
 
 ![](http://img.macrozheng.com/mall/project/mall_tiny_start_08.png)
 
