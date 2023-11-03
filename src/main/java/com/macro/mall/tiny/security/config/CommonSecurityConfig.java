@@ -46,17 +46,12 @@ public class CommonSecurityConfig {
     }
 
     @Bean
-    public DynamicAccessDecisionManager dynamicAccessDecisionManager() {
-        return new DynamicAccessDecisionManager();
-    }
-
-    @Bean
     public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
         return new DynamicSecurityMetadataSource();
     }
 
     @Bean
-    public DynamicSecurityFilter dynamicSecurityFilter(){
-        return new DynamicSecurityFilter();
+    public DynamicAuthorizationManager dynamicAuthorizationManager() {
+        return new DynamicAuthorizationManager();
     }
 }

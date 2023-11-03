@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 /**
- * SpringSecurity 5.4.x以上新用法配置
+ * SpringSecurity 6.x以上新用法配置
  * 为避免循环依赖，仅用于配置HttpSecurity
  * Created by macro on 2019/11/5.
  */
@@ -32,9 +32,7 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
     @Autowired
-    private DynamicSecurityService dynamicSecurityService;
-    @Autowired
-    private DynamicSecurityFilter dynamicSecurityFilter;
+    private DynamicAuthorizationManager dynamicAuthorizationManager;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -51,7 +49,7 @@ public class SecurityConfig {
         registry.and()
                 .authorizeHttpRequests()
                 .anyRequest()
-                .authenticated()
+                .access(dynamicAuthorizationManager)
                 // 关闭跨站请求防护及不使用session
                 .and()
                 .csrf()
@@ -66,10 +64,6 @@ public class SecurityConfig {
                 // 自定义权限拦截器JWT过滤器
                 .and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
-        //有动态权限配置时添加动态权限校验过滤器
-        if(dynamicSecurityService!=null){
-            registry.and().addFilterBefore(dynamicSecurityFilter, FilterSecurityInterceptor.class);
-        }
         return httpSecurity.build();
     }
 }
