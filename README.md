@@ -7,6 +7,14 @@
     <a href="https://github.com/macrozheng/mall-admin-web"><img src="http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/badge/%E5%89%8D%E7%AB%AF%E9%A1%B9%E7%9B%AE-mall--admin--web-green.svg" alt="前端项目"></a>
 </p>
 
+## 友情提示
+
+> 1. **快速体验项目**：[在线访问地址](https://www.macrozheng.com/admin/index.html) 。
+> 2. **全套学习教程**：[《mall学习教程》](https://www.macrozheng.com) 。
+> 3. **视频教程（2023最新版）**：[《mall视频教程》](https://www.macrozheng.com/mall/catalog/mall_video.html) 。
+> 4. **微服务版本**：基于Spring Cloud 2021 & Alibaba的项目：[mall-swarm](https://github.com/macrozheng/mall-swarm) 。
+> 5. **SpringBoot 3.x版本**：已支持SpringBoot 3.x + JDK 17，具体参考[3.x分支](./tree/3.x)。
+
 ## 简介
 
 mall-tiny是一款基于SpringBoot+MyBatis-Plus的快速开发脚手架，拥有完整的权限管理功能，可对接Vue前端，开箱即用。
