@@ -13,7 +13,7 @@
 > 2. **全套学习教程**：[《mall学习教程》](https://www.macrozheng.com) 。
 > 3. **视频教程（2023最新版）**：[《mall视频教程》](https://www.macrozheng.com/mall/catalog/mall_video.html) 。
 > 4. **微服务版本**：基于Spring Cloud 2021 & Alibaba的项目：[mall-swarm](https://github.com/macrozheng/mall-swarm) 。
-> 5. **SpringBoot 3.x版本**：已支持SpringBoot 3.x + JDK 17，具体参考[3.x分支](./tree/3.x)。
+> 5. **SpringBoot 3.x版本**：已支持SpringBoot 3.x + JDK 17，具体参考[3.x分支](https://github.com/macrozheng/mall-tiny/tree/3.x) 。
 
 ## 简介
 
