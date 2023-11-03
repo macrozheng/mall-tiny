@@ -21,18 +21,18 @@ mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理�
 
 | 技术                   | 版本    | 说明             |
 | ---------------------- | ------- | ---------------- |
-| SpringBoot             | 2.7.0   | 容器+MVC框架     |
-| SpringSecurity         | 5.7.1   | 认证和授权框架   |
-| MyBatis                | 3.5.9   | ORM框架          |
-| MyBatis-Plus           | 3.5.1   | MyBatis增强工具  |
-| MyBatis-Plus Generator | 3.5.1   | 数据层代码生成器 |
-| Swagger-UI             | 3.0.0   | 文档生产工具     |
+| SpringBoot             | 3.1.5   | 容器+MVC框架     |
+| SpringSecurity         | 6.1.5   | 认证和授权框架   |
+| MyBatis                | 3.5.10  | ORM框架          |
+| MyBatis-Plus           | 3.5.3   | MyBatis增强工具  |
+| MyBatis-Plus Generator | 3.5.3   | 数据层代码生成器 |
+| SpringDoc              | 2.0.2   | 文档生产工具     |
 | Redis                  | 5.0     | 分布式缓存       |
 | Docker                 | 18.09.0 | 应用容器引擎     |
-| Druid                  | 1.2.9   | 数据库连接池     |
-| Hutool                 | 5.8.0   | Java工具类库     |
+| Druid                  | 1.2.14  | 数据库连接池     |
+| Hutool                 | 5.8.9   | Java工具类库     |
 | JWT                    | 0.9.1   | JWT登录支持      |
-| Lombok                 | 1.18.24 | 简化对象封装工具 |
+| Lombok                 | 1.18.30 | 简化对象封装工具 |
 
 ## 数据库表结构
 
@@ -101,7 +101,7 @@ resources
 
 - 获取指定记录详情：GET /{控制器路由名称}/{id}
 
-- 具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：http://localhost:8080/swagger-ui/
+- 具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：http://localhost:8080/swagger-ui/index.html
 
 ![](http://img.macrozheng.com/mall/project/mall_tiny_start_02.png)
 
@@ -293,13 +293,13 @@ docker run -p 8080:8080 --name mall-tiny \
 
 > 由于使用了SpringSecurity来实现认证和授权，部分接口需要token才可以访问，访问需要认证授权接口流程如下。
 
-- 访问Swagger-UI接口文档：http://localhost:8080/swagger-ui/
+- 访问Swagger-UI接口文档：http://localhost:8080/swagger-ui/index.html
 
 - 调用登录接口获取token；
 
 ![](http://img.macrozheng.com/mall/project/mall_tiny_start_07.png)
 
-- 点击右上角Authorize按钮输入token，然后访问相关接口即可。
+- 点击右上角Authorize按钮输入token，然后访问相关接口即可（注意新版不需要添加Beaer的认证前缀了）。
 
 ![](http://img.macrozheng.com/mall/project/mall_tiny_start_08.png)
 
@@ -318,10 +318,10 @@ docker run -p 8080:8080 --name mall-tiny \
 @EqualsAndHashCode(callSuper = false)
 public class UmsAdminLoginParam {
     @NotEmpty
-    @ApiModelProperty(value = "用户名",required = true)
+    @Schema(title = "用户名",required = true)
     private String username;
     @NotEmpty
-    @ApiModelProperty(value = "密码",required = true)
+    @Schema(title = "密码",required = true)
     private String password;
 }
 ```
@@ -334,11 +334,11 @@ public class UmsAdminLoginParam {
  * Created by macro on 2018/4/26.
  */
 @Controller
-@Api(tags = "UmsAdminController", description = "后台用户管理")
+@Tag(name = "UmsAdminController",description = "后台用户管理")
 @RequestMapping("/admin")
 public class UmsAdminController {
 
-    @ApiOperation(value = "登录以后返回token")
+    @Operation(summary = "登录以后返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
@@ -366,4 +366,4 @@ public class UmsAdminController {
 
 [Apache License 2.0](https://github.com/macrozheng/mall-tiny/blob/master/LICENSE)
 
-Copyright (c) 2018-2022 macrozheng
+Copyright (c) 2018-2023 macrozheng

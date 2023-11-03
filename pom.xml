@@ -28,7 +28,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.2</version>
+        <version>3.1.5</version>
         <relativePath/>
     </parent>
     <dependencies>
@@ -138,6 +138,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.1.5</version>
             </plugin>
             <plugin>
                 <groupId>io.fabric8</groupId>
@@ -163,7 +164,7 @@
                             <!--定义镜像构建行为-->
                             <build>
                                 <!--定义基础镜像-->
-                                <from>openjdk:8</from>
+                                <from>openjdk:17</from>
                                 <args>
                                     <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
                                 </args>
