@@ -23,7 +23,7 @@ mall-tiny是一款基于SpringBoot+MyBatis-Plus的快速开发脚手架，拥有
 
 mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理系统。前端项目地址：https://github.com/macrozheng/mall-admin-web
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_09.png)
+![](./images/mall_tiny_start_09.png)
 
 ## 技术选型
 
@@ -44,7 +44,7 @@ mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理�
 
 ## 数据库表结构
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_01.png)
+![](./images/mall_tiny_start_01.png)
 
 - 化繁为简，仅保留了权限管理功能相关的9张表，方便自由定制；
 
@@ -111,7 +111,7 @@ resources
 
 - 具体参数及返回结果定义可以运行代码查看Swagger-UI的Api文档：http://localhost:8080/swagger-ui/
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_02.png)
+![](./images/mall_tiny_start_02.png)
 
 ### 项目运行
 
@@ -123,7 +123,7 @@ resources
 
 > 创建好`pms`模块的所有表，需要注意的是一定要写好表字段的`注释`，这样实体类和接口文档中就会自动生成字段说明了。
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_03.png)
+![](./images/mall_tiny_start_03.png)
 
 #### 使用代码生成器
 
@@ -131,15 +131,15 @@ resources
 
 - 代码生成器支持两种模式，一种生成单表的代码，比如只生成`pms_brand`表代码可以先输入`pms`，后输入`pms_brand`；
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_04.png)
+![](./images/mall_tiny_start_04.png)
 
 - 生成代码结构一览；
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_05.png)
+![](./images/mall_tiny_start_05.png)
 
 - 另一种直接生成整个模块的代码，比如生成`pms`模块代码可以先输入`pms`，后输入`pms_*`。
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_06.png)
+![](./images/mall_tiny_start_06.png)
 
 #### 编写业务代码
 
@@ -305,11 +305,11 @@ docker run -p 8080:8080 --name mall-tiny \
 
 - 调用登录接口获取token；
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_07.png)
+![](./images/mall_tiny_start_07.png)
 
 - 点击右上角Authorize按钮输入token，然后访问相关接口即可。
 
-![](http://img.macrozheng.com/mall/project/mall_tiny_start_08.png)
+![](./images/mall_tiny_start_08.png)
 
 #### 请求参数校验
 
@@ -364,9 +364,7 @@ public class UmsAdminController {
 
 ## 公众号
 
-学习不走弯路，关注公众号「**macrozheng**」，回复「**学习路线**」，获取mall项目专属学习路线！
-
-加微信群交流，公众号后台回复「**加群**」即可。
+加微信群交流，关注公众号「**macrozheng**」回复「**加群**」即可。
 
 ![公众号图片](http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/banner/qrcode_for_macrozheng_258.jpg)
 
