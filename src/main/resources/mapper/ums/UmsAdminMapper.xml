@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.macro.mall.tiny.modules.ums.mapper.UmsAdminMapper">
+<mapper namespace="com.tiny.ums.mapper.UmsAdminMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.macro.mall.tiny.modules.ums.model.UmsAdmin">
+    <resultMap id="BaseResultMap" type="com.tiny.ums.model.UmsAdmin">
         <id column="id" property="id" />
         <result column="username" property="username" />
         <result column="password" property="password" />

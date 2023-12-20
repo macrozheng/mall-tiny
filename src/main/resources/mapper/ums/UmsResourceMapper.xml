@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.macro.mall.tiny.modules.ums.mapper.UmsResourceMapper">
+<mapper namespace="com.tiny.ums.mapper.UmsResourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.macro.mall.tiny.modules.ums.model.UmsResource">
+    <resultMap id="BaseResultMap" type="com.tiny.ums.model.UmsResource">
         <id column="id" property="id" />
         <result column="create_time" property="createTime" />
         <result column="name" property="name" />
@@ -12,7 +12,7 @@
         <result column="category_id" property="categoryId" />
     </resultMap>
 
-    <select id="getResourceList" resultType="com.macro.mall.tiny.modules.ums.model.UmsResource">
+    <select id="getResourceList" resultType="com.tiny.ums.model.UmsResource">
         SELECT
             ur.id id,
             ur.create_time createTime,
@@ -32,7 +32,7 @@
             ur.id
     </select>
 
-    <select id="getResourceListByRoleId" resultType="com.macro.mall.tiny.modules.ums.model.UmsResource">
+    <select id="getResourceListByRoleId" resultType="com.tiny.ums.model.UmsResource">
         SELECT
             r.id id,
             r.create_time createTime,
