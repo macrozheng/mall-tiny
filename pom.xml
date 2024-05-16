@@ -16,7 +16,7 @@
         <docker.host>http://192.168.3.105:2375</docker.host>
         <docker.maven.plugin.version>0.40.0</docker.maven.plugin.version>
         <druid.version>1.2.14</druid.version>
-        <hutool.version>5.8.9</hutool.version>
+        <hutool.version>5.8.21</hutool.version>
         <mysql-connector.version>8.0.29</mysql-connector.version>
         <jjwt.version>0.9.1</jjwt.version>
         <mybatis-plus.version>3.5.1</mybatis-plus.version>
