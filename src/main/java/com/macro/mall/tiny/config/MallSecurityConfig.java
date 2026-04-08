@@ -4,13 +4,9 @@ import com.macro.mall.tiny.modules.ums.model.UmsResource;
 import com.macro.mall.tiny.modules.ums.service.UmsAdminService;
 import com.macro.mall.tiny.modules.ums.service.UmsResourceService;
 import com.macro.mall.tiny.security.component.DynamicSecurityService;
-import com.macro.mall.tiny.security.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -39,14 +35,29 @@ public class MallSecurityConfig {
     @Bean
     public DynamicSecurityService dynamicSecurityService() {
         return new DynamicSecurityService() {
+            private Map<String, String> dataSource;
+
             @Override
-            public Map<String, ConfigAttribute> loadDataSource() {
-                Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
+            public Map<String, String> loadDataSource() {
+                dataSource = new ConcurrentHashMap<>();
                 List<UmsResource> resourceList = resourceService.list();
                 for (UmsResource resource : resourceList) {
-                    map.put(resource.getUrl(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getName()));
+                    dataSource.put(resource.getUrl(), resource.getId() + ":" + resource.getName());
                 }
-                return map;
+                return dataSource;
+            }
+
+            @Override
+            public Map<String, String> getDataSource() {
+                if (dataSource == null) {
+                    loadDataSource();
+                }
+                return dataSource;
+            }
+
+            @Override
+            public void clearDataSource() {
+                dataSource = null;
             }
         };
     }

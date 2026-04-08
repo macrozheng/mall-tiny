@@ -46,11 +46,6 @@ public class CommonSecurityConfig {
     }
 
     @Bean
-    public DynamicSecurityMetadataSource dynamicSecurityMetadataSource() {
-        return new DynamicSecurityMetadataSource();
-    }
-
-    @Bean
     public DynamicAuthorizationManager dynamicAuthorizationManager() {
         return new DynamicAuthorizationManager();
     }

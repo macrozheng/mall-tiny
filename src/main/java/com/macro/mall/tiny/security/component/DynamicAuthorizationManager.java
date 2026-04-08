@@ -5,7 +5,6 @@ import com.macro.mall.tiny.security.config.IgnoreUrlsConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -16,6 +15,7 @@ import org.springframework.util.PathMatcher;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class DynamicAuthorizationManager implements AuthorizationManager<RequestAuthorizationContext> {
 
     @Autowired
-    private DynamicSecurityMetadataSource securityDataSource;
+    private DynamicSecurityService dynamicSecurityService;
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
 
@@ -52,16 +52,18 @@ public class DynamicAuthorizationManager implements AuthorizationManager<Request
             return new AuthorizationDecision(true);
         }
         //权限校验逻辑
-        List<ConfigAttribute> configAttributeList = securityDataSource.getConfigAttributesWithPath(path);
-        List<String> needAuthorities = configAttributeList.stream()
-                .map(ConfigAttribute::getAttribute)
+        Map<String, String> dataSource = dynamicSecurityService.getDataSource();
+        List<String> needAuthorities = dataSource.entrySet().stream()
+                .filter(entry -> pathMatcher.match(entry.getKey(), path))
+                .map(Map.Entry::getValue)
                 .collect(Collectors.toList());
         Authentication currentAuth = authentication.get();
         //判定是否已经实现登录认证
         if(currentAuth.isAuthenticated()){
             Collection<? extends GrantedAuthority> grantedAuthorities = currentAuth.getAuthorities();
-            List<? extends GrantedAuthority> hasAuth = grantedAuthorities.stream()
-                    .filter(item -> needAuthorities.contains(item.getAuthority()))
+            List<String> hasAuth = grantedAuthorities.stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .filter(needAuthorities::contains)
                     .collect(Collectors.toList());
             if(CollUtil.isNotEmpty(hasAuth)){
                 return new AuthorizationDecision(true);

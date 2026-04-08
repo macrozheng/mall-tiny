@@ -1,7 +1,5 @@
 package com.macro.mall.tiny.security.component;
 
-import org.springframework.security.access.ConfigAttribute;
-
 import java.util.Map;
 
 /**
@@ -12,5 +10,15 @@ public interface DynamicSecurityService {
     /**
      * 加载资源ANT通配符和资源对应MAP
      */
-    Map<String, ConfigAttribute> loadDataSource();
+    Map<String, String> loadDataSource();
+
+    /**
+     * 获取已加载的资源MAP
+     */
+    Map<String, String> getDataSource();
+
+    /**
+     * 清空已加载的资源MAP
+     */
+    void clearDataSource();
 }

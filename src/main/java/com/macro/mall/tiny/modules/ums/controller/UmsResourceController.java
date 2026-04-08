@@ -5,7 +5,7 @@ import com.macro.mall.tiny.common.api.CommonPage;
 import com.macro.mall.tiny.common.api.CommonResult;
 import com.macro.mall.tiny.modules.ums.model.UmsResource;
 import com.macro.mall.tiny.modules.ums.service.UmsResourceService;
-import com.macro.mall.tiny.security.component.DynamicSecurityMetadataSource;
+import com.macro.mall.tiny.security.component.DynamicSecurityService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +26,14 @@ public class UmsResourceController {
     @Autowired
     private UmsResourceService resourceService;
     @Autowired
-    private DynamicSecurityMetadataSource dynamicSecurityMetadataSource;
+    private DynamicSecurityService dynamicSecurityService;
 
     @Operation(summary = "添加后台资源")
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult create(@RequestBody UmsResource umsResource) {
         boolean success = resourceService.create(umsResource);
-        dynamicSecurityMetadataSource.clearDataSource();
+        dynamicSecurityService.clearDataSource();
         if (success) {
             return CommonResult.success(null);
         } else {
@@ -47,7 +47,7 @@ public class UmsResourceController {
     public CommonResult update(@PathVariable Long id,
                                @RequestBody UmsResource umsResource) {
         boolean success = resourceService.update(id, umsResource);
-        dynamicSecurityMetadataSource.clearDataSource();
+        dynamicSecurityService.clearDataSource();
         if (success) {
             return CommonResult.success(null);
         } else {
@@ -68,7 +68,7 @@ public class UmsResourceController {
     @ResponseBody
     public CommonResult delete(@PathVariable Long id) {
         boolean success = resourceService.delete(id);
-        dynamicSecurityMetadataSource.clearDataSource();
+        dynamicSecurityService.clearDataSource();
         if (success) {
             return CommonResult.success(null);
         } else {
