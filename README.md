@@ -29,18 +29,18 @@ mall-tiny项目可无缝对接`mall-admin-web`前端项目，秒变权限管理�
 
 | 技术                   | 版本    | 说明             |
 | ---------------------- | ------- | ---------------- |
-| SpringBoot             | 3.1.5   | 容器+MVC框架     |
-| SpringSecurity         | 6.1.5   | 认证和授权框架   |
-| MyBatis                | 3.5.10  | ORM框架          |
-| MyBatis-Plus           | 3.5.3   | MyBatis增强工具  |
-| MyBatis-Plus Generator | 3.5.3   | 数据层代码生成器 |
-| SpringDoc              | 2.0.2   | 文档生产工具     |
+| SpringBoot             | 4.0.5   | 容器+MVC框架     |
+| SpringSecurity         | 7.0.6   | 认证和授权框架   |
+| MyBatis                | 3.5.16  | ORM框架          |
+| MyBatis-Plus           | 3.5.16  | MyBatis增强工具  |
+| MyBatis-Plus Generator | 3.5.16  | 数据层代码生成器 |
+| SpringDoc              | 3.0.2   | 文档生产工具     |
 | Redis                  | 5.0     | 分布式缓存       |
 | Docker                 | 18.09.0 | 应用容器引擎     |
-| Druid                  | 1.2.14  | 数据库连接池     |
-| Hutool                 | 5.8.9   | Java工具类库     |
-| JWT                    | 0.9.1   | JWT登录支持      |
-| Lombok                 | 1.18.30 | 简化对象封装工具 |
+| Druid                  | 1.2.24  | 数据库连接池     |
+| Hutool                 | 5.8.40  | Java工具类库     |
+| MySQL                  | 9.1.0   | MySQL数据库驱动  |
+| Lombok                 | latest  | 简化对象封装工具 |
 
 ## 数据库表结构
 
@@ -313,7 +313,7 @@ docker run -p 8080:8080 --name mall-tiny \
 
 #### 请求参数校验
 
-> 默认集成了`Jakarta Bean Validation`参数校验框架，只需在参数对象属性中添加`javax.validation.constraints`包中的注解注解即可实现校验功能，这里以登录参数校验为例。
+> 默认集成了`Jakarta Bean Validation`参数校验框架，只需在参数对象属性中添加`jakarta.validation.constraints`包中的注解即可实现校验功能，这里以登录参数校验为例。
 
 - 首先在登录请求参数中添加`@NotEmpty`注解；
 
